@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Condex — PDF Zip Upload",
+  title: "condex",
   description: "Upload a zipped folder of PDFs to Condex.",
 };
 

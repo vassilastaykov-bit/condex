@@ -9,7 +9,7 @@ What it does:
   3. Unzips each one and extracts text from every PDF inside using PyMuPDF.
   4. Writes one markdown file per PDF into processed/<zip name>/.
 
-Usage:
+Usage (from the scripts/ folder):
     pip install -r requirements.txt
     set BLOB_READ_WRITE_TOKEN=vercel_blob_rw_xxx   (Windows PowerShell: $env:BLOB_READ_WRITE_TOKEN="...")
     python process_uploads.py

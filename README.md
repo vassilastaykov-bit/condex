@@ -25,7 +25,9 @@ Create a `.env.local` (see `.env.example`) with `UPLOAD_PASSCODE` set, and run
 
 ## Processing script
 
-`process_uploads.py` runs on your own computer (not on Vercel). It:
+`scripts/process_uploads.py` runs on your own computer (not on Vercel — it
+lives in its own folder so Vercel doesn't try to build it as part of the
+site). It:
 
 1. Lists blobs in your Blob store using `BLOB_READ_WRITE_TOKEN`.
 2. Downloads any `uploads/*.zip` it hasn't processed before (state tracked in `processed_state.json`).
@@ -33,6 +35,7 @@ Create a `.env.local` (see `.env.example`) with `UPLOAD_PASSCODE` set, and run
 4. Writes one markdown file per PDF into `processed/<zip name>/`.
 
 ```bash
+cd scripts
 pip install -r requirements.txt
 python process_uploads.py
 ```

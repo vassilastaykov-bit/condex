@@ -10,31 +10,21 @@ function BrandMark() {
   return (
     <svg
       className="brand-mark"
-      width="28"
-      height="28"
+      width="32"
+      height="32"
       viewBox="0 0 64 64"
       aria-hidden="true"
     >
-      <rect
-        x="16"
-        y="14"
-        width="26"
-        height="26"
-        rx="6"
-        transform="rotate(-8 16 14)"
-        fill="none"
-        stroke="#3d4354"
-        strokeWidth="2.5"
-      />
-      <rect
-        x="22"
-        y="24"
-        width="26"
-        height="26"
-        rx="6"
-        transform="rotate(6 22 24)"
-        fill="#7c8aff"
-      />
+      <defs>
+        <linearGradient id="brandGradient" x1="0" y1="0" x2="64" y2="64">
+          <stop offset="0" stopColor="#7c8aff" />
+          <stop offset="1" stopColor="#5a67e8" />
+        </linearGradient>
+      </defs>
+      <rect width="64" height="64" rx="16" fill="url(#brandGradient)" />
+      <rect x="16" y="20" width="32" height="6" rx="3" fill="#0a0b10" opacity="0.92" />
+      <rect x="16" y="30" width="24" height="6" rx="3" fill="#0a0b10" opacity="0.92" />
+      <rect x="16" y="40" width="14" height="6" rx="3" fill="#ff8a5c" />
     </svg>
   );
 }

@@ -5,6 +5,7 @@ import { upload } from "@vercel/blob/client";
 import { MAX_UPLOAD_SIZE_BYTES, UPLOAD_PATH_PREFIX } from "@/lib/constants";
 
 type Status = "idle" | "uploading" | "success" | "error";
+type SubscribeStatus = "idle" | "submitting" | "success" | "error";
 
 function BrandMark() {
   return (
@@ -37,6 +38,39 @@ export default function Page() {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string>("");
   const [progress, setProgress] = useState<number>(0);
+
+  const [email, setEmail] = useState("");
+  const [subscribeStatus, setSubscribeStatus] = useState<SubscribeStatus>("idle");
+  const [subscribeMessage, setSubscribeMessage] = useState("");
+
+  async function handleSubscribe(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSubscribeStatus("submitting");
+    setSubscribeMessage("");
+
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      setSubscribeStatus("success");
+      setSubscribeMessage("You're on the list. We'll be in touch.");
+      setEmail("");
+    } catch (error) {
+      setSubscribeStatus("error");
+      setSubscribeMessage(
+        error instanceof Error ? error.message : "Something went wrong."
+      );
+    }
+  }
 
   function pickFile(candidate: File | undefined | null) {
     if (!candidate) return;
@@ -115,8 +149,52 @@ export default function Page() {
         <span className="brand-name">condex</span>
       </div>
 
+      <section className="hero">
+        <p className="eyebrow">For realtors</p>
+        <h1 className="hero-title">De-risk every condo deal.</h1>
+        <p className="hero-subtitle">
+          Upload a status certificate and get back an instant, peer-ranked
+          condo risk report — built from the same underwriting data insurers
+          and lenders rely on. Walk in looking like the expert who did the
+          homework.
+        </p>
+      </section>
+
+      <form className="subscribe" onSubmit={handleSubscribe}>
+        <label className="field-label" htmlFor="subscribe-email">
+          Get launch updates
+        </label>
+        <div className="subscribe-row">
+          <input
+            id="subscribe-email"
+            type="email"
+            placeholder="you@brokerage.com"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            autoComplete="email"
+            required
+          />
+          <button type="submit" disabled={subscribeStatus === "submitting"}>
+            {subscribeStatus === "submitting" ? "Sending…" : "Notify me"}
+          </button>
+        </div>
+        {subscribeMessage && (
+          <p
+            className={`message ${
+              subscribeStatus === "error"
+                ? "error"
+                : subscribeStatus === "success"
+                ? "success"
+                : ""
+            }`}
+          >
+            {subscribeMessage}
+          </p>
+        )}
+      </form>
+
       <div className="card">
-        <h1>Upload your documents</h1>
+        <h2>Upload your documents</h2>
         <p className="subtitle">
           Zip a folder of PDFs and drop it below. You&apos;ll need the
           passcode to upload.

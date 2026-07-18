@@ -23,6 +23,13 @@
   box-sizing: border-box;
 }
 
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+}
+
 html,
 body {
   padding: 0;
@@ -35,8 +42,8 @@ body {
     radial-gradient(ellipse 900px 500px at 50% -10%, #2d2560 0%, transparent 60%);
   background-size: 22px 22px, 100% 100%;
   color: var(--fg);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
   display: flex;
@@ -47,14 +54,14 @@ body {
 
 main {
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 11px;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 
 .brand-mark {
@@ -67,6 +74,73 @@ main {
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--fg);
+}
+
+.eyebrow {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 12px;
+}
+
+.hero {
+  margin-bottom: 32px;
+}
+
+.hero-title {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(1.9rem, 5vw, 2.35rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;
+}
+
+.hero-subtitle {
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  margin: 0;
+  max-width: 42ch;
+}
+
+.subscribe {
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.subscribe-row {
+  display: flex;
+  gap: 10px;
+}
+
+.subscribe-row input[type="email"] {
+  flex: 1;
+  min-width: 0;
+  background: #0d0f16;
+  border: 1px solid var(--border-strong);
+  color: var(--fg);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.subscribe-row input[type="email"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.subscribe-row button {
+  width: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 0 20px;
 }
 
 .card {
@@ -89,7 +163,7 @@ main {
   background: linear-gradient(90deg, var(--accent), var(--coral));
 }
 
-h1 {
+.card h2 {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -266,4 +340,14 @@ button:disabled {
 .message.success {
   color: var(--success);
   background: var(--success-dim);
+}
+
+@media (max-width: 380px) {
+  .subscribe-row {
+    flex-direction: column;
+  }
+
+  .subscribe-row button {
+    width: 100%;
+  }
 }
